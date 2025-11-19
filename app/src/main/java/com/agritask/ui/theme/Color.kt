@@ -1,4 +1,4 @@
-package com.example.agritaskandroid.ui.theme
+package com.agritask.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
