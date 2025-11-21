@@ -1,10 +1,10 @@
 package com.agritask.ui
 
-data class Grower(
+data class PlotGroup(
     val id: Long,
     val name: String,
+    val ownerID: Long,
     val active: Boolean,
-    val code: String,
-    val dynamicProperties: Map<String, String>
-)
+    val code: String
 
+)

@@ -37,7 +37,7 @@ fun MainScreen(navController: NavController){
             }
 
             Button( onClick = {
-                navController.navigate("growersList")
+                navController.navigate("growers")
             }){
                 Text("To Growers")
             }

@@ -5,12 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,6 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AgritaskAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    val appViewModel: AppViewModel = viewModel()
                    val navController = rememberNavController()
 
                     NavHost(
@@ -36,7 +34,16 @@ class MainActivity : ComponentActivity() {
                             MainScreen(navController = navController)
                         }
                         composable(route = "growers"){
-                            GrowersList(navController = navController)
+                            GrowersList(
+                                navController = navController,
+                                viewModel = appViewModel
+                            )
+                        }
+                        composable(route = "plot_groups"){
+                            PlotGroupList(
+                                navController = navController,
+                                viewModel = appViewModel
+                            )
                         }
                     }
                 }

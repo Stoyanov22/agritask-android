@@ -14,13 +14,14 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GrowersList(navController: NavController, viewModel: AppViewModel){
-    val growers = viewModel.growers
+fun PlotGroupList(navController: NavController, viewModel: AppViewModel){
+    val groups = viewModel.groups
+    val currentGrower = viewModel.selectedGrower.value
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title={
-                    Text("Growers")
+                    Text("Plot Groups of ${currentGrower?.name}")
                 }
             )
         }
@@ -28,24 +29,18 @@ fun GrowersList(navController: NavController, viewModel: AppViewModel){
         LazyColumn(
             modifier = Modifier.padding(innerPadding)
         ) {
-            items(growers){
-                GrowerCard(
-                    grower = it,
-                    onGrowerClick = {
-
-//                        viewModel.onGrowerSelected(it)
-//                        navController.navigate("plot_groups")
+            items(groups){
+                if(currentGrower?.id == it.ownerID){
+                PlotGroupCard(
+                    plotGroup = it,
+                    onPlotGroupClick = {
                         if(it.active){
-                            //If "it" is active we are gonna sent the user to list of plots, belongs to this grower, filtered by OwnerID = it.id
-                            Log.d("Grower status", "${it.name} is Active")
-                            viewModel.onGrowerSelected(it)
-                            navController.navigate("plot_groups")
+                            Log.d("${it.name} status","Active: true")
                         }else{
-                            Log.d("Grower status", "${it.name} is inactive")
-                            //gonna throw a message "Selected Grower is inactive"
+                            Log.d("${it.name} status","Active: false")
                         }
-                    }
-                )
+                    })
+                }
             }
         }
     }
