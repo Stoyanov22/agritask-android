@@ -35,7 +35,8 @@ fun PlotGroupList(navController: NavController, viewModel: AppViewModel){
                     plotGroup = it,
                     onPlotGroupClick = {
                         if(it.active){
-                            Log.d("${it.name} status","Active: true")
+                            viewModel.onPlotGroupSelected(it)
+                            navController.navigate("plots")
                         }else{
                             Log.d("${it.name} status","Active: false")
                         }

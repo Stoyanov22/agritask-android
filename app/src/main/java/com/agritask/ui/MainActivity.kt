@@ -45,6 +45,12 @@ class MainActivity : ComponentActivity() {
                                 viewModel = appViewModel
                             )
                         }
+                        composable(route = "plots"){
+                            PlotsList(
+                                navController = navController,
+                                viewModel = appViewModel
+                            )
+                        }
                     }
                 }
             }

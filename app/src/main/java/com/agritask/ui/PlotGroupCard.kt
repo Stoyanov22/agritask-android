@@ -31,7 +31,7 @@ fun PlotGroupCard(
         modifier = Modifier
             .fillMaxSize()
             .padding(vertical = 4.dp, horizontal = 8.dp)
-            .clickable{onPlotGroupClick},
+            .clickable{onPlotGroupClick()},
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ){
         Row(
@@ -42,7 +42,7 @@ fun PlotGroupCard(
             Icon(
                 imageVector = Icons.Default.List,
                 contentDescription = "Plot Group Icon",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(50.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
 
