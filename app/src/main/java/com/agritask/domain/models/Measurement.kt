@@ -1,6 +1,6 @@
 package com.agritask.domain.models
 
-import com.google.android.gms.fido.fido2.api.common.Attachment
+//import com.google.android.gms.fido.fido2.api.common.Attachment
 import java.sql.Timestamp
 import java.time.LocalDate
 

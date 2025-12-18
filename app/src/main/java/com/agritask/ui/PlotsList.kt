@@ -1,6 +1,5 @@
 package com.agritask.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,9 +14,14 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlotsList(navController: NavController, viewModel: AppViewModel){
-    val plots = viewModel.plots
+    val allPlots = viewModel.plots
     val group = viewModel.selectedPlotGroup.value
     val grower = viewModel.selectedGrower.value
+
+    val filteredPlots = allPlots.filter {
+        it.groupID == group?.id && it.ownerID == grower?.id
+    }
+
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title={
@@ -26,17 +30,15 @@ fun PlotsList(navController: NavController, viewModel: AppViewModel){
         )
     }) { innerPadding ->
         LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            items(plots){
-                if(it.groupID==group?.id && it.ownerID==grower?.id){
-                    PlotCard(
-                        plot =it,
-                        onPlotClick = {
-                            Log.d("Plot", "To be continue...")
-                        }
-                    )
-                }
+            items(filteredPlots) { plot ->
+                PlotCard(
+                    plot = plot,
+                    onPlotClick = {
+                        viewModel.onPlotSelected(plot)
+                        navController.navigate("tasks")
+                    }
+                )
             }
         }
-
     }
 }

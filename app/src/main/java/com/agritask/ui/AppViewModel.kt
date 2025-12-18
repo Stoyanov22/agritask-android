@@ -1,8 +1,10 @@
 package com.agritask.ui
 
+import Task
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
+import androidx.compose.runtime.derivedStateOf
 
 class AppViewModel: ViewModel() {
 
@@ -73,6 +75,14 @@ class AppViewModel: ViewModel() {
         Plot(4893231,"Plot X", true,"P321391",1253231,321789),
         Plot(4893262,"Plot Y", true,"P321301",5124123,321780),
     )
+    //Tasks
+    private val allTasks = listOf(
+        Task(101, "Weekly Spraying", TaskType.SPRAYING, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "18.12.2025"),
+        Task(102, "Morning Scouting", TaskType.SCOUTING, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "19.12.2025"),
+        Task(103, "Fertilization", TaskType.FERTILIZATION, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "20.12.2025")
+    )
+
+
 
     private val _selectedGrower = mutableStateOf<Grower?>(null)
     val selectedGrower: State<Grower?> = _selectedGrower
@@ -86,4 +96,45 @@ class AppViewModel: ViewModel() {
     fun onPlotGroupSelected(plotGroup: PlotGroup){
         _selectedPlotGroup.value = plotGroup
     }
+    private val _selectedPlot = mutableStateOf<Plot?>(null)
+    val selectedPlot: State<Plot?> = _selectedPlot
+
+    fun onPlotSelected(plot: Plot) {
+        _selectedPlot.value = plot
+    }
+
+    private val _selectedTask = mutableStateOf<Task?>(null)
+    val filteredTasks = derivedStateOf {
+        val currentPlotId = _selectedPlot.value?.id ?: return@derivedStateOf emptyList()
+        allTasks.filter { task -> task.plotIds.contains(currentPlotId) }
+    }
+    val applicationMethods = listOf("Option A", "Option B", "Option C", "Option D")
+    val targetLists = listOf("Target A", "Target B", "Target C", "Target D")
+    val areaUnits = listOf("ha", "ac")
+    //SCOUTING
+    val observationTypes = listOf("Insects (Насекоми)", "Disease (Болест)", "Weeds (Плевели)", "General Growth (Общ растеж)")
+    val severityLevels = listOf("Low (Ниско)", "Medium (Средно)", "High (Високо)", "Critical (Критично)")
+    //FERT
+    val fertilizers = listOf("Urea 46%", "NPK 14-14-14", "Ammonium Nitrate", "DAP")
+    val fertilizerUnits = listOf("kg", "L", "ton")
+
+    //ЗА SAVE ГЛЕДАЙ след този коментар
+    private val _reports = mutableListOf<TaskReport>()
+
+    fun saveSprayingReport(report: SprayingReport) {
+        _reports.add(report) // Тук си слагаш базата данни
+        println("SAVED SPRAYING: $report")
+    }
+
+    fun saveScoutingReport(report: ScoutingReport) {
+        _reports.add(report) // Тук си слагаш базата данни
+        println("SAVED SCOUTING: $report")
+    }
+
+    fun saveFertilizationReport(report: FertilizationReport) {
+        _reports.add(report) // Тук си слагаш базата данни
+        println("SAVED FERTILIZATION: $report")
+    }
+
+    fun getAllReports(): List<TaskReport> = _reports // Ако искаш си ги извикай някъде
 }
