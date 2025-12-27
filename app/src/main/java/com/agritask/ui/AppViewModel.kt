@@ -1,13 +1,36 @@
 package com.agritask.ui
 
-import Task
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
-
+import com.agritask.domain.models.Crop
+import com.agritask.domain.models.Season
+import java.time.LocalDate
+@RequiresApi(Build.VERSION_CODES.O)
 class AppViewModel: ViewModel() {
+    //Crops
+    val wheat = Crop(1, "WHT", "Wheat (Пшеница)", LocalDate.of(2023, 1, 1))
+    val corn = Crop(2, "CRN", "Corn (Царевица)", LocalDate.of(2023, 1, 1))
+    val barley = Crop(3, "BRL", "Barley (Ечемик)", LocalDate.of(2023, 1, 1))
+    //Tasks
+    val availableTasks = listOf(
+        Task(101, "Fungicide Application", TaskType.SPRAYING, listOf(1, 3), "Protect against fungus"),
 
+        Task(102, "Nitrogen Boost", TaskType.FERTILIZATION, listOf(1, 2, 3), "Spring fertilization"),
+
+        Task(103, "Corn Borer Scout", TaskType.SCOUTING, listOf(2), "Check for drilling insects"),
+
+        Task(104, "General Scouting", TaskType.SCOUTING, listOf(1, 2, 3), "Routine check"),
+
+        Task(105, "Report Harvest", TaskType.HARVEST,listOf(1), "Report Harvest"),
+
+        Task(106, "Report Drilling", TaskType.DRILLING, listOf(1), "Report Drilling"),
+
+        Task(107, "Report Meteorology", TaskType.METEOROLOGY, listOf(1), "Report Meteorology")
+    )
     //Growers
     val growers = listOf(
         Grower(5124123,"Huan Memo", true,"TL34213", mapOf(
@@ -17,72 +40,34 @@ class AppViewModel: ViewModel() {
         Grower(5345234,"Pedro Medro", true,"TL54233", mapOf(
             "country" to "Mexico",
             "language" to "Spanish"
-        )),
-        Grower(5123214,"Hose Mose", true,"TL43212", mapOf(
-            "country" to "Mexico",
-            "language" to "Spanish"
-        )),
-        Grower(5421233,"Ricardo Cardo", true,"TL43123",mapOf(
-            "country" to "Mexico",
-            "language" to "Spanish"
-        )),
-        Grower(1253231,"Johny Dep", true,"TL532413",mapOf(
-            "country" to "Mexico",
-            "language" to "Spanish"
-        )),
-        Grower(5431232,"John Dow", true,"TL312542",mapOf(
-            "country" to "Mexico",
-            "language" to "Spanish"
-        )),
-        Grower(4324123,"Bebo Mebo", true,"TL423523",mapOf(
-            "country" to "Mexico",
-            "language" to "Spanish"
-        )),
+        ))
     )
     //Plot Groups
     val groups = listOf(
         PlotGroup(321781,"Plot Group A",5124123,true,"PG31241"),
         PlotGroup(321782,"Plot Group B",5345234,true,"PG31242"),
-        PlotGroup(321783,"Plot Group C",5123214,true,"PG31243"),
-        PlotGroup(321784,"Plot Group D",5421233,true,"PG31244"),
-        PlotGroup(321785,"Plot Group E",1253231,true,"PG31245"),
-        PlotGroup(321786,"Plot Group F",5431232,true,"PG31246"),
-        PlotGroup(321787,"Plot Group G",4324123,true,"PG31247"),
-        PlotGroup(321788,"Plot Group H",5421233,true,"PG31248"),
-        PlotGroup(321789,"Plot Group E",1253231,true,"PG31249"),
-        PlotGroup(321780,"Plot Group F",5124123,false,"PG31240"),
     )
     //Plots
     val plots = listOf(
-        Plot(4893241,"Plot A", true,"P321321",5124123,321781),
-        Plot(4893242,"Plot B", true,"P321322",5345234,321782),
-        Plot(4893243,"Plot C", true,"P321323",5123214,321783),
-        Plot(4893244,"Plot D", true,"P321324",5421233,321784),
-        Plot(4893245,"Plot E", true,"P321325",1253231,321785),
-        Plot(4893246,"Plot N", true,"P321326",5431232,321786),
-        Plot(4893247,"Plot G", true,"P321327",4324123,321787),
-        Plot(4893248,"Plot H", true,"P321328",5421233,321788),
-        Plot(4893249,"Plot F", true,"P321329",1253231,321789),
-        Plot(4893240,"Plot O", true,"P321320",5124123,321780),
-        Plot(4893251,"Plot P", true,"P321311",5124123,321781),
-        Plot(4893261,"Plot Q", true,"P321321",5345234,321782),
-        Plot(4893271,"Plot R", true,"P321331",5123214,321783),
-        Plot(4893281,"Plot S", true,"P321341",5421233,321784),
-        Plot(4893291,"Plot T", true,"P321351",1253231,321785),
-        Plot(4893201,"Plot G", true,"P321361",5431232,321786),
-        Plot(4893211,"Plot W", true,"P321371",4324123,321787),
-        Plot(4893221,"Plot Z", true,"P321381",5421233,321788),
-        Plot(4893231,"Plot X", true,"P321391",1253231,321789),
-        Plot(4893262,"Plot Y", true,"P321301",5124123,321780),
+        Plot(4893241, "Plot A", true, "P1", 5124123, 321781),
+        Plot(4893242, "Plot B", true, "P2", 5345234, 321782)
     )
-    //Tasks
-    private val allTasks = listOf(
-        Task(101, "Weekly Spraying", TaskType.SPRAYING, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "18.12.2025"),
-        Task(102, "Morning Scouting", TaskType.SCOUTING, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "19.12.2025"),
-        Task(103, "Fertilization", TaskType.FERTILIZATION, listOf(4893241,4893242,4893243,4893244,4893245,4893246,4893247,4893248,4893249,4893240,4893251,4893261,4893271,4893281,4893291,4893201,4893211,4893221,4893231,4893262), "20.12.2025")
+    //Seasons
+    val seasons = listOf(
+        Season(
+            id = 501,
+            plotId = 4893241, // Plot A
+            activeFrom = LocalDate.now().minusMonths(2), // Започнал преди 2 месеца
+            activeUntil = LocalDate.now().plusMonths(4), // Ще свърши след 4
+            crop = wheat
+        ),
+        Season(
+            id = 502,
+            plotId = 4893242, // Plot B
+            activeFrom = LocalDate.now().minusDays(10),
+            crop = corn
+        )
     )
-
-
 
     private val _selectedGrower = mutableStateOf<Grower?>(null)
     val selectedGrower: State<Grower?> = _selectedGrower
@@ -102,12 +87,29 @@ class AppViewModel: ViewModel() {
     fun onPlotSelected(plot: Plot) {
         _selectedPlot.value = plot
     }
-
-    private val _selectedTask = mutableStateOf<Task?>(null)
-    val filteredTasks = derivedStateOf {
-        val currentPlotId = _selectedPlot.value?.id ?: return@derivedStateOf emptyList()
-        allTasks.filter { task -> task.plotIds.contains(currentPlotId) }
+    fun getActiveSeasonForPlot(plotId: Long): Season? {
+        val today = LocalDate.now()
+        return seasons.find { season ->
+            season.plotId == plotId && season.isActive(today)
+        }
     }
+    fun getTasksForSelectedPlot(): List<Task> {
+        val currentPlot = _selectedPlot.value ?: return emptyList()
+
+        val activeSeason = getActiveSeasonForPlot(currentPlot.id) ?: return emptyList()
+
+        val cropId = activeSeason.crop.id
+
+        return availableTasks.filter { task ->
+            task.validForCropIds.contains(cropId)
+        }
+    }
+//    fun isPlotActive(plotId: Long): Boolean {
+//        return getActiveSeasonForPlot(plotId) != null
+//    }
+
+//    private val _selectedTask = mutableStateOf<Task?>(null)
+    //Базата данни :)
     val applicationMethods = listOf("Option A", "Option B", "Option C", "Option D")
     val targetLists = listOf("Target A", "Target B", "Target C", "Target D")
     val areaUnits = listOf("ha", "ac")
@@ -117,7 +119,15 @@ class AppViewModel: ViewModel() {
     //FERT
     val fertilizers = listOf("Urea 46%", "NPK 14-14-14", "Ammonium Nitrate", "DAP")
     val fertilizerUnits = listOf("kg", "L", "ton")
-
+    // --- DRILLING DATA ---
+    val availableMachines = listOf("John Deere 8R", "Case IH Magnum", "New Holland T8", "Fendt 1000")
+    val availableImplements = listOf("Seeder Väderstad", "Harrow Amazone", "Planter Horsch", "Roller Dal-Bo", "Fertilizer Hopper")
+    val harvestMachines = listOf(
+        "Claas Lexion 8900", "Claas Lexion 770", "Claas Tucano 580",
+        "John Deere X9 1100", "John Deere S790", "John Deere T670",
+        "New Holland CR10.90", "New Holland CX8.80",
+        "Case IH Axial-Flow 9250", "Fendt IDEAL 9T", "Massey Ferguson IDEAL"
+    )
     //ЗА SAVE ГЛЕДАЙ след този коментар
     private val _reports = mutableListOf<TaskReport>()
 
@@ -134,6 +144,20 @@ class AppViewModel: ViewModel() {
     fun saveFertilizationReport(report: FertilizationReport) {
         _reports.add(report) // Тук си слагаш базата данни
         println("SAVED FERTILIZATION: $report")
+    }
+
+    fun saveMeteorologyReport(report: MeteorologyReport) {
+        _reports.add(report)
+        println("SAVED METEOROLOGY: $report")
+    }
+    fun saveDrillingReport(report: DrillingReport) {
+        _reports.add(report)
+        println("SAVED DRILLING: $report")
+    }
+
+    fun saveHarvestReport(report: HarvestReport) {
+        _reports.add(report)
+        println("SAVED HARVEST: $report")
     }
 
     fun getAllReports(): List<TaskReport> = _reports // Ако искаш си ги извикай някъде

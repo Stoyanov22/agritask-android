@@ -14,7 +14,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.agritask.ui.task.screens.Drilling
 import com.agritask.ui.task.screens.Fertilization
+import com.agritask.ui.task.screens.Harvest
+import com.agritask.ui.task.screens.Meteorology
 import com.agritask.ui.task.screens.Scouting
 import com.agritask.ui.task.screens.SprayingScreen
 import com.agritask.ui.theme.AgritaskAndroidTheme
@@ -84,6 +87,25 @@ class MainActivity : ComponentActivity() {
                             val plot = appViewModel.selectedPlot.value
                             if (plot != null) {
                                 Fertilization(navController = navController,viewModel = appViewModel, currentPlot = plot)
+                            }
+                        }
+
+                        composable(route = "meteorology") {
+                            val plot = appViewModel.selectedPlot.value
+                            if (plot != null) {
+                                Meteorology(navController = navController, viewModel = appViewModel, currentPlot = plot)
+                            }
+                        }
+                        composable(route = "drilling") {
+                            val plot = appViewModel.selectedPlot.value
+                            if (plot != null) {
+                                Drilling(navController = navController, viewModel = appViewModel, currentPlot = plot)
+                            }
+                        }
+                        composable(route = "harvest") {
+                            val plot = appViewModel.selectedPlot.value
+                            if (plot != null) {
+                                Harvest(navController = navController, viewModel = appViewModel, currentPlot = plot)
                             }
                         }
                     }

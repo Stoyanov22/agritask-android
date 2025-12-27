@@ -6,6 +6,7 @@ import java.time.LocalDate
 
 data class Season(
     val id: Long,
+    val plotId: Long,
     val activeFrom: LocalDate,
     val activeUntil: LocalDate? = null,
     val crop: Crop,
