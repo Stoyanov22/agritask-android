@@ -7,6 +7,7 @@ import java.time.LocalDate
 data class Crop(
     val id: Long,
     val code: String,
+    val name:String,
     val activeFrom: LocalDate,
     val activeUntil: LocalDate? = null,
     val additionalProperties: String? = null
